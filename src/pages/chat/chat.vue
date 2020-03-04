@@ -247,6 +247,12 @@
           return;
         }
 
+        this.$store.dispatch('sendMessage', {
+          friend: self.friend,
+          msg: text,
+          img: null
+        })
+
         // Reset attachments
         self.attachments = [];
         // Hide sheet
@@ -255,30 +261,7 @@
         self.messagebar.clear();
         // Focus area
         if (text.length) self.messagebar.focus();
-        // Send message
-        self.messagesData.push(...messagesToSend);
-
-        // Mock response
-        if (self.responseInProgress) return;
-        self.responseInProgress = true;
-        setTimeout(() => {
-          const answer = self.answers[Math.floor(Math.random() * self.answers.length)];
-          const person = self.people[Math.floor(Math.random() * self.people.length)];
-          self.typingMessage = {
-            name: person.name,
-            avatar: person.avatar,
-          };
-          setTimeout(() => {
-            self.messagesData.push({
-              text: answer,
-              type: 'received',
-              name: person.name,
-              avatar: person.avatar,
-            });
-            self.typingMessage = null;
-            self.responseInProgress = false;
-          }, 4000);
-        }, 1000);
+        
       },
     },
   };

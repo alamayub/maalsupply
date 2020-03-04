@@ -23,6 +23,29 @@ const ChatModule = {
     },
   },
   actions: {
+    sendMessage({}, payload) {
+      var promise = new Promise((resolve, reject) => {
+        db.firechats.child(fb.auth().currentUser.uid).child(payload.friend.uid).push({ 
+          sentby: fb.auth().currentUser.uid,
+          text: payload.msg,
+          image: payload.image,
+          //timestamp: fb.database.ServerValue.TIMESTAMP,  //fb.firestore.FieldValue.serverTimestamp(),
+          timestamp: fb.firestore.ServerValue.serverTimestamp(),
+        }).then( () => {
+          db.firechats.child(payload.friend.uid).child(fb.auth().currentUser.uid).push({
+            sentby: fb.auth().currentUser.uid,
+            text: payload.msg,
+            image: payload.image,
+            timestamp: fb.database().ServerValue.TIMESTAMP
+          }).then( () => {
+            resolve(true)
+          }).catch( (err) => {
+            reject(err)
+          })
+        })
+      })
+      return promise
+    },
     confirmRequest({dispatch}, payload) {
       var promise = new Promise((resolve, reject) => {
         db.firefriends.child(fb.auth().currentUser.uid)

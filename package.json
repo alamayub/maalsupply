@@ -1,8 +1,8 @@
 {
-  "name": "thoughtsmaker",
+  "name": "MaalSupply",
   "private": true,
   "version": "1.0.0",
-  "description": "ThoughtsMaker",
+  "description": "MaalSupply",
   "repository": "",
   "license": "UNLICENSED",
   "framework7": {
@@ -12,7 +12,7 @@
       "pwa",
       "cordova"
     ],
-    "name": "ThoughtsMaker",
+    "name": "MaalSupply",
     "framework": "vue",
     "template": "tabs",
     "bundler": "webpack",
@@ -32,7 +32,7 @@
       "preserveAssetsPaths": false,
       "inlineAssets": true
     },
-    "pkg": "io.framework7.thoughtsmaker",
+    "pkg": "io.framework7.maalsupply",
     "cordova": {
       "folder": "cordova",
       "platforms": [
