@@ -1,9 +1,9 @@
 <template>
-  <f7-page no-toolbar>
+  <f7-page no-toolbar no-swipeback>
     <f7-navbar title="Register" style="color: teal;"></f7-navbar>
     <div class="wrapper">
       <img class="image-cover" :src="image_url" @click="launchFilePicker">
-      <input type="file" ref="file" style="display: none;" @change="onFilePicked">
+      <input accept="image/*" type="file" ref="file" style="display: none;" @change="onFilePicked">
     </div>
     <f7-list form>
       <f7-list-input label="Name" type="text" placeholder="Your name" :value="name" @input="name = $event.target.value"></f7-list-input>
@@ -13,7 +13,6 @@
     <f7-list>
       <f7-button style="margin: auto 15px;" fill round @click="signUp">Sign Up</f7-button>
       <f7-block-footer>
-        <f7-link>Resend Confirmation Email</f7-link><br>
         Already have an account?<f7-link href="/signin/">&nbsp;&nbsp;login</f7-link><br>
       </f7-block-footer>
     </f7-list>

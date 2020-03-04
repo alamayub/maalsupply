@@ -9,7 +9,7 @@ const FileModule = {
     files:state=>state.files
   },
   mutations: {
-    setImageUrl(state, payload) {
+    setImageURL(state, payload) {
       state.image_url = payload
     },
     setFiles(state, payload) {
@@ -26,7 +26,7 @@ const FileModule = {
         fileReader.readAsDataURL(file)
         fileReader.addEventListener('load', () => {
           var imageUrl = fileReader.result
-          commit('setImageUrl', imageUrl)
+          commit('setImageURL', imageUrl)
         })        
       } else {
         commit('setAlertMessage', 'Please chose an image less than 2MB')
@@ -39,16 +39,16 @@ const FileModule = {
         var storageRef = fb.storage().ref('profile/'+file.name)
         var task = storageRef.put(file)
         task.on('state_changed', (snapshot) => {
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-          }, (err) => {
-            console.log(err.message)
-          }, () => {
-            task.snapshot.ref.getDownloadURL().then( (downloadURL) => {
-                resolve(downloadURL)
-              console.log('File available at', downloadURL);
-            });
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        }, (err) => {
+          console.log(err)
+        }, () => {
+          task.snapshot.ref.getDownloadURL().then( (downloadURL) => {
+            resolve(downloadURL)
+            console.log('File available at', downloadURL);
           });
+        });
       })
     }
   }

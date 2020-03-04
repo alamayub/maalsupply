@@ -8,16 +8,18 @@
     <f7-list>
       <f7-button style="margin: auto 15px;" fill round @click="signIn">Sign In</f7-button>
       <f7-block-footer>
-        <f7-link>Resend Confirmation Email</f7-link><br>
         Don't have an account?<f7-link href="/signup/">&nbsp;&nbsp;SignUp</f7-link><br>
-        <f7-link>Forget password?</f7-link>
+        <f7-link @click="forgetPassword">Forget password?</f7-link>
       </f7-block-footer>
     </f7-list>
   </f7-page>
 </template>
 
 <script>
+  import fb from '../../js/firebase'
+  import { mixin } from '../../js/mixin'
   export default {
+    mixins: [mixin],
     data() {
       return {
         email: null,
@@ -25,6 +27,18 @@
       };
     },
     methods: {
+      forgetPassword() {
+        const self = this
+        if(this.email != null) {
+          fb.auth().sendPasswordResetEmail(this.email).then( () => {
+            self.$store.commit('setAlertMessage', 'Please check your email to reset password')
+          }).catch( (err) => {
+            self.$store.commit('setAlertMessage', err.message)
+          });
+        } else {
+          self.$store.commit('setAlertMessage', 'Please enter your email')
+        }
+      },
       signIn() {
         const self = this;
         var payload= {}

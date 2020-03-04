@@ -2,11 +2,17 @@ import fb from '../../js/firebase'
 const AuthModule = {
   state: {
     signed_up: false,
-    signed_in: false
+    signed_in: false,
+    photo_url: null,
+    display_name: null,
+    email: null
   },
   getters: {
     signed_up: state=>state.signed_up,
-    signed_in: state=>state.signed_in
+    signed_in: state=>state.signed_in,
+    photo_url: state=>state.photo_url,
+    display_name: state=>state.display_name,
+    email: state=>state.email
   },
   mutations: {
     setSignedUp(state, payload) {
@@ -15,14 +21,34 @@ const AuthModule = {
     setSignedIn(state, payload) {
       state.signed_in = payload
     },
+    setPhotoURL(state, payload) {
+      state.photo_url = payload
+    },
+    setDisplayName(state, payload) {
+      state.display_name = payload
+    },
+    setEmail(state, payload) {
+      state.email = payload
+    },
   },
   actions: {
     signIn({commit}, payload) {
       fb.auth().signInWithEmailAndPassword(payload.email, payload.password).then( (user) => {
-        commit('setSignedIn', true)
+        fb.auth().onAuthStateChanged( (user) => {
+          if(user.emailVerified) {
+            commit('setSignedIn', true)
+            commit('setDisplayName', user.displayName)
+            commit('setPhotoURL', user.photoURL)
+            commit('setEmail', user.email)
+            //commit('setAlertMessage', `Welcome ${user.displayName}`)
+          } else {
+            commit('setSignedIn', false)
+            commit('setAlertMessage', 'Please varify your email')
+          }
+        });
       })
       .catch( (err) => {
-        commit('setAlertMessage', err.message)
+        commit('setAlertMessage', err)
       });
     },
     signUp({commit, dispatch}, payload) {
@@ -44,11 +70,11 @@ const AuthModule = {
           console.log('profile updated')
         }).catch( (err) => {
           console.log(err.message)
-          commit('setAlertMessage', err.message)
+          commit('setAlertMessage', err)
         })
       }).catch( (err) => {
           console.log(err.message)
-          commit('setAlertMessage', err.message)
+          commit('setAlertMessage', err)
       })
     },
     sendVerification({commit}) {
@@ -58,6 +84,11 @@ const AuthModule = {
       }).catch( (err) => {
         
       });
+    },
+    signOut({commit}) {
+      fb.auth().signOut().then( () => {
+        commit('setSignedIn', false)
+      })
     }
   }
 }

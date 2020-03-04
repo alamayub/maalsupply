@@ -1,30 +1,39 @@
 <template>
 <f7-app :params="f7params" class="color-theme-teal text-color-teal">
-  <!-- Right panel with reveal effect-->
-  <f7-panel right reveal>
-    <f7-view>
-      <f7-page>
-        <f7-navbar no-shadow style="color: teal;" title="DJ Snake"></f7-navbar>
-        <f7-block>
-          kux aayega isme vi...
-        </f7-block>
-      </f7-page>
-    </f7-view>
-  </f7-panel>
 
   <f7-views tabs class="safe-areas" v-if="signed_in">
-    <f7-toolbar tabbar labels bottom no-shadow>
+    <f7-toolbar tabbar labels bottom no-shadow v-show="show_tabbar">
       <f7-link tab-link="#view-home" tab-link-active icon-ios="f7:house_fill" icon-aurora="f7:house_fill" icon-md="material:home" text="Home"></f7-link>
       <f7-link tab-link="#view-profile" icon-ios="f7:person_alt" icon-aurora="f7:person_alt" icon-md="material:person" text="Profile"></f7-link>
     </f7-toolbar>
 
     <f7-view id="view-home" main tab tab-active url="/"></f7-view>
-    <f7-view id="view-allphotos" name="allphotos" tab url="/allphotos/"></f7-view>
-    <f7-view id="view-friends" name="friends" tab url="/friends/"></f7-view>
     <f7-view id="view-profile" name="profile" tab url="/editprofile/"></f7-view>
   </f7-views>
 
   <f7-view v-if="!signed_in" url="/signin/" :main="true"></f7-view>
+
+  <f7-popup class="demo-popup-swipe" swipe-to-close>
+    <f7-page>
+      <f7-navbar title="Swipe To Close">
+        <f7-nav-right>
+          <f7-link popup-close>Close</f7-link>
+        </f7-nav-right>
+      </f7-navbar>
+
+      <div style="height: 100%"><!--class="display-flex justify-content-center align-items-center"-->
+        <div class="wrapper">
+          <img class="image-cover" :src="image_url" @click="launchFilePicker">
+          <input type="file" ref="file" style="display:none;" @change="onFilePicked">
+        </div>
+        <f7-list>
+          <f7-list-input type="textarea" placeholder="Write something here..." :value="desc" @input="desc = $event.target.value"></f7-list-input>
+          <f7-button style="margin: auto 15px;" fill @click="post">Post</f7-button>
+        </f7-list>
+        <p> {{ desc }}</p>
+      </div>
+    </f7-page>
+  </f7-popup>
 
 </f7-app>
 </template>
@@ -32,26 +41,22 @@
   import { Device }  from 'framework7/framework7-lite.esm.bundle.js';
   import cordovaApp from '../js/cordova-app.js';
   import routes from '../js/routes.js';
-  import { fb, db } from '../js/firebase'
-
+  import fb from '../js/firebase'
   export default {
     data() {
       return {
         // Framework7 Parameters
         f7params: {
-          id: 'io.framework7.thoughtsmaker', // App bundle ID
-          name: 'ThoughtsMaker', // App name
+          id: 'io.framework7.maalsupply', // App bundle ID
+          name: 'MaalSupply', // App name
           theme: 'auto', // Automatic theme detection
           // App root data
           data: function () {
             return {
-
             };
           },
-
           // App routes
           routes: routes,
-
           // Register service worker
           serviceWorker: Device.cordova ? {} : {
             path: '/service-worker.js',
@@ -73,11 +78,17 @@
     },
     
     computed: {
+      show_tabbar () {
+        return this.$store.getters.show_tabbar
+      },
       signed_in () {
         return this.$store.getters.signed_in
       },
       image_url() {
         return this.$store.getters.image_url
+      },
+      display_name () {
+        return this.$store.getters.display_name
       },
       files () {
         return this.$store.getters.files
@@ -112,16 +123,20 @@
     },
     mounted() {
       this.$f7ready((f7) => {
+        // Init cordova APIs (see cordova-app.js)
         if (Device.cordova) {
           cordovaApp.init(f7);
         }
+        // Call F7 APIs here
       });
     },
     mounted() {
       this.$f7ready((f7) => {
+        // Init cordova APIs (see cordova-app.js)
         if (Device.cordova) {
           cordovaApp.init(f7);
         }
+        // Call F7 APIs here
       });
     }
   }
