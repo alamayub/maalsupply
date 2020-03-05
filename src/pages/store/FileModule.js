@@ -2,21 +2,62 @@ import fb from '../../js/firebase'
 const FileModule = {
   state: {
     image_url: 'https://nagriksevakendra.in/default/login/avatar.png',
-    files: null
+    files: null,
+    images: []
   },
   getters: {
     image_url:state=>state.image_url,
-    files:state=>state.files
+    files:state=>state.files,
+    images:state=>state.images
   },
   mutations: {
     setImageURL(state, payload) {
       state.image_url = payload
     },
     setFiles(state, payload) {
-        state.files = payload
-      }
+      state.files = payload
+    },
+    setImages(state, payload) {
+      state.images = payload
+    }
   },
   actions: {
+    readFileMessage({commit}) {
+      const files = event.target.files;
+      for(var i = 0; i < files.length; i++) {
+        var file = files[i]
+        if(!file.type.match('image')) {
+          continue;
+        }
+        var picReader = new FileReader();
+        var images = []
+        picReader.addEventListener('load', (event) => {
+          var picFile = event.target;
+          images.push(picFile.result)
+        })
+        commit('setImages', images)
+        picReader.readAsDataURL(file)
+      }
+    },
+    uploadChatImages({commit}, payload) {
+      return new Promise((resolve, reject) => {
+        var number = Math.random();
+        var unique_id = number.toString(36).substr(2, 9);
+        var storageRef = fb.storage().ref('chat_images/'+`${unique_id}.png`)
+        var task = storageRef.putString(payload, 'data_url', {
+          contentType: 'image/png'
+        })
+        task.on('state_changed', (snapshot) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        }, (err) => {
+          reject(err)
+        }, () => {
+          task.snapshot.ref.getDownloadURL().then( (downloadURL) => {
+            resolve(downloadURL)
+          });
+        });
+      })
+    },
     readFile({commit}) {
       const files = event.target.files;
       commit('setFiles', files);
@@ -42,7 +83,7 @@ const FileModule = {
           var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
         }, (err) => {
-          console.log(err)
+          reject(err)
         }, () => {
           task.snapshot.ref.getDownloadURL().then( (downloadURL) => {
             resolve(downloadURL)

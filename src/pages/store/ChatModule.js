@@ -38,8 +38,9 @@ const ChatModule = {
           message.type = message.sentby == current_user.uid ? 'sent' : 'received';
           message.name = message.sentby == current_user.uid ? current_user.displayName : payload.name;
           message.avatar = message.sentby == current_user.uid ? current_user.photoURL : payload.photo_url;
-          message.date = moment(message.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+          message.date = moment(message.timestamp).format("MMMM Do dddd")
         })
+        //var groupedmessages = _.orderBy(messages, 'date')
         commit('setChatMessages', messages)
       })
     },
