@@ -14,7 +14,7 @@
     </f7-navbar>
 
     <f7-list style="margin: 0px;" media-list>
-      <f7-list-item v-for="(friend, index) in friends" :key="index" :title="friend.name" subtitle="last message" @click="gotoChat(friend)">
+      <f7-list-item v-for="(friend, index) in friends" :key="index" :title="friend.name" :text="friend.latest_message" @click="gotoChat(friend)">
         <img slot="media" :src="friend.photo_url" width="44" height="44" style="border-radius: 50%;" />
       </f7-list-item>
     </f7-list>

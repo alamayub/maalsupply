@@ -4,10 +4,12 @@
   <f7-views tabs class="safe-areas" v-if="signed_in">
     <f7-toolbar tabbar labels bottom no-shadow v-show="show_tabbar">
       <f7-link tab-link="#view-home" tab-link-active icon-ios="f7:house_fill" icon-aurora="f7:house_fill" icon-md="material:home" text="Home"></f7-link>
+      <f7-link tab-link="#view-chatgroups" icon-ios="f7:person_3_fill" icon-aurora="f7:person_3_fill" icon-md="material:group" text="Groupsbra"></f7-link>
       <f7-link tab-link="#view-profile" icon-ios="f7:person_alt" icon-aurora="f7:person_alt" icon-md="material:person" text="Profile"></f7-link>
     </f7-toolbar>
 
     <f7-view id="view-home" main tab tab-active url="/"></f7-view>
+    <f7-view id="view-chatgroups" name="chatgroups" tab url="/chatgroups/"></f7-view>
     <f7-view id="view-profile" name="profile" tab url="/editprofile/"></f7-view>
   </f7-views>
 
