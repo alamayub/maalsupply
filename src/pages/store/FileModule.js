@@ -3,23 +3,28 @@ const FileModule = {
   state: {
     image_url: 'https://nagriksevakendra.in/default/login/avatar.png',
     files: null,
-    images: []
+    images: [],
+    group_image_url: 'https://cdn0.iconfinder.com/data/icons/social-media-glyph-1/64/Facebook_Social_Media_User_Interface-39-512.png'
   },
   getters: {
     image_url:state=>state.image_url,
     files:state=>state.files,
-    images:state=>state.images
+    images:state=>state.images,
+    group_image_url:state=>state.group_image_url
   },
   mutations: {
     setImageURL(state, payload) {
       state.image_url = payload
+    },
+    setGroupImageURL(state, payload) {
+      state.group_image_url = payload
     },
     setFiles(state, payload) {
       state.files = payload
     },
     setImages(state, payload) {
       state.images = payload
-    }
+    },
   },
   actions: {
     readFileMessage({commit}) {
@@ -58,7 +63,7 @@ const FileModule = {
         });
       })
     },
-    readFile({commit}) {
+    readFile({commit}, action_name) {
       const files = event.target.files;
       commit('setFiles', files);
       const fileReader = new FileReader();
@@ -67,7 +72,7 @@ const FileModule = {
         fileReader.readAsDataURL(file)
         fileReader.addEventListener('load', () => {
           var imageUrl = fileReader.result
-          commit('setImageURL', imageUrl)
+          commit(action_name, imageUrl)
         })        
       } else {
         commit('setAlertMessage', 'Please chose an image less than 2MB')

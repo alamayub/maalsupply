@@ -53,7 +53,7 @@
         this.$refs.file.click();
       },
       onFilePicked () {
-        this.$store.dispatch('readFile')
+        this.$store.dispatch('readFile', 'setImageURL')
       },
       signUp() {
         const self = this;

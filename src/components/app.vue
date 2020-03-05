@@ -4,7 +4,7 @@
   <f7-views tabs class="safe-areas" v-if="signed_in">
     <f7-toolbar tabbar labels bottom no-shadow v-show="show_tabbar">
       <f7-link tab-link="#view-home" tab-link-active icon-ios="f7:house_fill" icon-aurora="f7:house_fill" icon-md="material:home" text="Home"></f7-link>
-      <f7-link tab-link="#view-chatgroups" icon-ios="f7:person_3_fill" icon-aurora="f7:person_3_fill" icon-md="material:group" text="Groupsbra"></f7-link>
+      <f7-link tab-link="#view-chatgroups" icon-ios="f7:person_3_fill" icon-aurora="f7:person_3_fill" icon-md="material:group" text="Groups"></f7-link>
       <f7-link tab-link="#view-profile" icon-ios="f7:person_alt" icon-aurora="f7:person_alt" icon-md="material:person" text="Profile"></f7-link>
     </f7-toolbar>
 
@@ -14,28 +14,6 @@
   </f7-views>
 
   <f7-view v-if="!signed_in" url="/signin/" :main="true"></f7-view>
-
-  <f7-popup class="demo-popup-swipe" swipe-to-close>
-    <f7-page>
-      <f7-navbar title="Swipe To Close">
-        <f7-nav-right>
-          <f7-link popup-close>Close</f7-link>
-        </f7-nav-right>
-      </f7-navbar>
-
-      <div style="height: 100%"><!--class="display-flex justify-content-center align-items-center"-->
-        <div class="wrapper">
-          <img class="image-cover" :src="image_url" @click="launchFilePicker">
-          <input type="file" ref="file" style="display:none;" @change="onFilePicked">
-        </div>
-        <f7-list>
-          <f7-list-input type="textarea" placeholder="Write something here..." :value="desc" @input="desc = $event.target.value"></f7-list-input>
-          <f7-button style="margin: auto 15px;" fill @click="post">Post</f7-button>
-        </f7-list>
-        <p> {{ desc }}</p>
-      </div>
-    </f7-page>
-  </f7-popup>
 
 </f7-app>
 </template>
@@ -74,8 +52,7 @@
             androidOverlaysWebView: false,
           },
         },
-        //add post
-        desc: null,
+
       }
     },
     
@@ -94,33 +71,6 @@
       },
       files () {
         return this.$store.getters.files
-      },
-    },
-    methods: {
-      launchFilePicker () {
-        this.$refs.file.click();
-      },
-      onFilePicked () {
-        this.$store.dispatch('readFile')
-      },
-      post() {
-        var user = fb.auth().currentUser
-        const self = this
-        var payload = {}
-        payload.uid = user.uid
-        payload.name = user.displayName
-        payload.user_image = user.photoURL
-        payload.email = user.email
-        payload.photoURL = this.image_url
-        payload.desc = this.desc
-        if(self.files) {
-          this.$store.dispatch('postImage').then( (url) => {
-            payload.photoURL = url
-            self.$store.dispatch('uploadPost', payload)
-          })
-        } else {
-          this.$store.dispatch('uploadPost', payload)
-        }
       },
     },
     mounted() {

@@ -57,7 +57,7 @@
         this.$refs.file.click();
       },
       onFilePicked () {
-        this.$store.dispatch('readFile')
+        this.$store.dispatch('readFile', 'setImageURL')
       },
       updateProfile() {
         const self = this
@@ -72,7 +72,7 @@
               console.log(err)
             })
           }
-          this.$store.dispatch('uploadFile').then( (url) => {
+          this.$store.dispatch('uploadFile', 'profile/').then( (url) => {
             user.updateProfile({
               displayName: self.display_name,
               photoURL: url

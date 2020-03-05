@@ -12,6 +12,7 @@ import ChatPage from '../pages/chat/chat.vue';
 
 //chatgroups
 import ChatGroupsPage from '../pages/chatgroups/chatgroups.vue'
+import NewGroupPage from '../pages/chatgroups/newgroup.vue'
 
 /*import AllPhotosPage from '../pages/allphotos.vue';
 import AllFriendsPage from '../pages/friends.vue';*/
@@ -57,6 +58,10 @@ var routes = [
   {
     path: '/chatgroups/',
     component: ChatGroupsPage,
+  },
+  {
+    path: '/newgroup/',
+    component: NewGroupPage,
   },
 
   {
