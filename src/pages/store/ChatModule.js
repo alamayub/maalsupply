@@ -1,15 +1,19 @@
 import fb from '../../js/firebase'
+import firebase from 'firebase'
 import * as db from './db'
+import moment from 'moment'
 const ChatModule = {
   state: {
     contacts: [],
     friends: [],
-    friend_requests: []
+    friend_requests: [],
+    chat_messages: []
   },
   getters: {
     contacts: state=>state.contacts,
     friends: state=>state.friends,
-    friend_requests: state=>state.friend_requests
+    friend_requests: state=>state.friend_requests,
+    chat_messages: state=>state.chat_messages
   },
   mutations: {
     setContacts(state, payload) {
@@ -21,22 +25,37 @@ const ChatModule = {
     setFriendRequests(state, payload) {
       state.friend_requests = payload
     },
+    setChatMessages(state, payload) {
+      state.chat_messages = payload
+    },
   },
   actions: {
+    getChatMessages({commit}, payload) {
+      var current_user = firebase.auth().currentUser
+      db.firechats.child(current_user.uid).child(payload.uid).on('value', (snapshot) => {
+        var messages = snapshot.val()
+        _.forEach(messages, message => {
+          message.type = message.sentby == current_user.uid ? 'sent' : 'received';
+          message.name = message.sentby == current_user.uid ? current_user.displayName : payload.name;
+          message.avatar = message.sentby == current_user.uid ? current_user.photoURL : payload.photo_url;
+          message.date = moment(message.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+        })
+        commit('setChatMessages', messages)
+      })
+    },
     sendMessage({}, payload) {
       var promise = new Promise((resolve, reject) => {
         db.firechats.child(fb.auth().currentUser.uid).child(payload.friend.uid).push({ 
           sentby: fb.auth().currentUser.uid,
           text: payload.msg,
-          image: payload.image,
-          //timestamp: fb.database.ServerValue.TIMESTAMP,  //fb.firestore.FieldValue.serverTimestamp(),
-          timestamp: fb.firestore.ServerValue.serverTimestamp(),
+          image: payload.img,
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
         }).then( () => {
           db.firechats.child(payload.friend.uid).child(fb.auth().currentUser.uid).push({
             sentby: fb.auth().currentUser.uid,
             text: payload.msg,
-            image: payload.image,
-            timestamp: fb.database().ServerValue.TIMESTAMP
+            image: payload.img,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
           }).then( () => {
             resolve(true)
           }).catch( (err) => {

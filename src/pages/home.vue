@@ -2,11 +2,6 @@
   <f7-page name="home" @page:beforein="initHome">
 
     <f7-navbar no-shadow>
-      <!--<f7-nav-left>
-        <f7-button round popup-open=".demo-popup-swipe">
-          <f7-icon size="20" f7="plus"></f7-icon>
-        </f7-button>
-      </f7-nav-left>-->
       <f7-nav-title style="color: teal;">MaalSupply</f7-nav-title>
       <f7-nav-right>
         <f7-link href="/requests/">
@@ -30,6 +25,7 @@
 <script>
 import fb from '../js/firebase'
 import { mixin } from '../js/mixin'
+import FastAverageColor from 'fast-average-color';
 export default {
   mixins: [mixin],
   computed: {
@@ -51,7 +47,7 @@ export default {
     },
     initHome() {
       this.$store.commit('setShowTabs', true)
-    }
+    },
   }
 }
 </script>

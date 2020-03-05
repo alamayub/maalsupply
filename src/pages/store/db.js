@@ -1,4 +1,4 @@
-import fb from '../../js/firebase'
-export let firerequest = fb.database().ref('/requests');
-export let firefriends = fb.database().ref('/friends');
-export let firechats = fb.database().ref('/chats');
+import firebase from 'firebase'
+export let firerequest = firebase.database().ref('/requests');
+export let firefriends = firebase.database().ref('/friends');
+export let firechats = firebase.database().ref('/chats');
