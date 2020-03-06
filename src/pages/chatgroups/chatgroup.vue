@@ -39,7 +39,7 @@
     </f7-messagebar>
 
     <f7-messages ref="messages">
-      <f7-messages-title><b>Sunday, Feb 9,</b> 12:58</f7-messages-title>
+      <!--<f7-messages-title><b>Sunday, Feb 9,</b> 12:58</f7-messages-title>-->
       <f7-message v-for="(message, index) in group_messages" :key="index" :type="message.type" :image="message.image" :name="message.displayName" :avatar="message.avatar" :first="isFirstMessage(message, index)" :last="isLastMessage(message, index)" :tail="isTailMessage(message, index)">
         <span slot="text" v-if="message.text" v-html="message.text"></span>
       </f7-message>
