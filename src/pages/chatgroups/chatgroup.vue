@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar style="color: teal;" back-link>
-      <img src="https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg" style="height: 40px; width: 40px; border-radius: 50%;" alt="" srcset="">
+      <img :src="group_image_url" style="height: 40px; width: 40px; border-radius: 50%;" alt="" srcset="">
       <f7-nav-title style="margin-left: 10px;">{{ chatgroup.name }}</f7-nav-title>
       <f7-nav-right>
         <f7-link @click="$refs.groupOptions.open()" icon-f7="ellipsis_vertical"></f7-link>
@@ -62,6 +62,9 @@
       };
     },
     computed: {
+      group_image_url() {
+        return this.$store.getters.group_image_url
+      },
       group_messages() {
         return this.$store.getters.group_messages
       },
