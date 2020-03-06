@@ -13,6 +13,10 @@ import ChatPage from '../pages/chat/chat.vue';
 //chatgroups
 import ChatGroupsPage from '../pages/chatgroups/chatgroups.vue'
 import NewGroupPage from '../pages/chatgroups/newgroup.vue'
+import ChatGroup from '../pages/chatgroups/chatgroup.vue'
+import AddMembers from '../pages/chatgroups/addmembers.vue'
+import GroupMembers from '../pages/chatgroups/groupmembers.vue'
+import GroupInfo from '../pages/chatgroups/groupinfo.vue'
 
 /*import AllPhotosPage from '../pages/allphotos.vue';
 import AllFriendsPage from '../pages/friends.vue';*/
@@ -53,6 +57,10 @@ var routes = [
     path: '/contacts/',
     component: ContactPage,
   },
+  {
+    path: '/chat/:frd',
+    component: ChatPage,
+  },
 
   //chatgroups
   {
@@ -63,10 +71,21 @@ var routes = [
     path: '/newgroup/',
     component: NewGroupPage,
   },
-
   {
-    path: '/chat/:frd',
-    component: ChatPage,
+    path: '/chatgroup/:group',
+    component: ChatGroup,
+  },
+  {
+    path: '/addmembers/:group_name',
+    component: AddMembers,
+  },
+  {
+    path: '/groupmembers/:group_name',
+    component: GroupMembers,
+  },
+  {
+    path: '/groupinfo/:group_name',
+    component: GroupInfo,
   },
 
 

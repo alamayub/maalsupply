@@ -1,5 +1,5 @@
 <template>
-  <f7-page name="chatgroups">
+  <f7-page name="chatgroups" @page:beforein="init">
     <f7-navbar style="color: teal;" title="All Chat Groups">
       <f7-nav-right>
         <f7-link icon-size="20" href="/newgroup/">
@@ -25,11 +25,17 @@ export default {
   },
   created() {
     this.$store.dispatch('getMyGroups')
+    this.init()
   },
   methods: {
     gotoGroup(group) {
-      console.log(group.name)
+      var groupstring = JSON.stringify(group)
+      this.$f7router.navigate('/chatgroup/'+encodeURIComponent(groupstring))
+    },
+    init () {
+      this.$store.commit('setShowTabs', true)
     }
-  }
+  },
+  
 }
 </script>
