@@ -1,7 +1,11 @@
 <template>
   <f7-page>
-    <f7-navbar back-link :title="friend.name"></f7-navbar>
-    <img :src="friend.image_url" style="height: 40px; width: 40px; border-radius: 50%;" alt="" srcset="">
+    <f7-navbar back-link>
+      <f7-nav-left>
+        <img :src="friend.photo_url" style="height: 40px; width: 40px; border-radius: 50%;" alt="" srcset="">
+      </f7-nav-left>
+      <f7-nav-title>{{ friend.name }}</f7-nav-title>
+    </f7-navbar>
     <f7-messagebar :placeholder="placeholder" ref="messagebar" :attachments-visible="attachmentsVisible" :sheet-visible="sheetVisible">
       <f7-link icon-ios="f7:folder" icon-aurora="f7:folder" icon-md="material:folder" slot="inner-start" @click="launchFilePicker"></f7-link>
       <f7-link icon-ios="f7:camera_fill" icon-aurora="f7:camera_fill" icon-md="material:camera_alt" slot="inner-start" @click="sheetVisible = !sheetVisible"></f7-link>
@@ -29,6 +33,7 @@
   export default {
     data() {
       return {
+        friend: null,
         attachments: [],
         sheetVisible: false,
         typingMessage: null,

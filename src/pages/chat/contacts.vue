@@ -4,7 +4,7 @@
     <f7-block class="friends no-border">
 
       <f7-list style="margin: 0px;">
-        <f7-list-item swipeout v-for="(contact, index) in contacts" :key="index" :title="contact.name" v-show="user != contact.uid">
+        <f7-list-item swipeout v-for="(contact, index) in contacts" :key="index" :title="contact.name" v-show="user.uid != contact.uid">
           <img slot="media" :src="contact.photo_url" />
           <f7-swipeout-actions right>
             <f7-swipeout-button color="white" @click="addFriend(contact)">
@@ -30,11 +30,11 @@ export default {
   computed: {
     contacts() {
       return this.$store.getters.contacts
-    }
+    },
   },
   created() {
+    this.user = fb.auth().currentUser
     return this.$store.dispatch('getAllUsers')
-    this.user = fb.auth().currentUser.uid
   },
   methods: {
     addFriend(contact) {

@@ -150,7 +150,6 @@ const ChatModule = {
     async getMyFriends({commit, dispatch}) {
       var users = await dispatch('getAllUsers')
       db.firefriends.child(fb.auth().currentUser.uid).on('value', (snapshot) => {
-        //var frds_id = _.map(snapshot.val(), "uid")
         var friends = snapshot.val()
         var userdetails = []
         _.forEach(friends, (frd, key) => {

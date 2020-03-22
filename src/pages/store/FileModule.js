@@ -68,14 +68,14 @@ const FileModule = {
       commit('setFiles', files);
       const fileReader = new FileReader();
       let file = files[0]
-      if(file['size'] < 200000) {
+      if(file['size'] < 300000) {
         fileReader.readAsDataURL(file)
         fileReader.addEventListener('load', () => {
           var imageUrl = fileReader.result
           commit(action_name, imageUrl)
         })        
       } else {
-        commit('setAlertMessage', 'Please chose an image less than 2MB')
+        commit('setAlertMessage', 'Please chose an image less than 3MB')
         return
       }
     },

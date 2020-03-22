@@ -10,10 +10,16 @@
           </f7-icon>
         </f7-link>
         <f7-link icon-f7="plus" icon-size="20" href="/contacts/"></f7-link>
+        <f7-link class="searchbar-enable" data-searchbar=".searchbar-demo" icon-ios="f7:search" icon-aurora="f7:search" icon-md="material:search"></f7-link>
       </f7-nav-right>
+      <f7-searchbar class="searchbar-demo" expandable search-container=".search-list" search-in=".item-title" :disable-button="!$theme.aurora"></f7-searchbar>
     </f7-navbar>
 
-    <f7-list style="margin: 0px;" media-list>
+    <f7-list class="searchbar-not-found" style="margin: 0px;">
+      <f7-list-item title="No friends found"></f7-list-item>
+    </f7-list>
+
+    <f7-list style="margin: 0px;" media-list class="search-list searchbar-found">
       <f7-list-item v-for="(friend, index) in friends" :key="index" :title="friend.name" :text="friend.latest_message" @click="gotoChat(friend)">
         <img slot="media" :src="friend.photo_url" width="44" height="44" style="border-radius: 50%;" />
       </f7-list-item>
