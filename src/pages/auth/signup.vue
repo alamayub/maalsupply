@@ -9,7 +9,13 @@
       <f7-list-input label="Name" type="text" placeholder="Your name" :value="name" @input="name = $event.target.value"></f7-list-input>
       <f7-list-input label="Email" type="email" placeholder="Your email" :value="email" @input="email = $event.target.value"></f7-list-input>
       <f7-list-input label="Password" type="password" placeholder="Your password" :value="password" @input="password = $event.target.value"></f7-list-input>
+<<<<<<< HEAD
       <f7-button style="margin: 10px 15px;" fill round @click="signUp">Sign Up</f7-button>
+=======
+    </f7-list>
+    <f7-list>
+      <f7-button style="margin: auto 15px;" fill round @click="signUp">Sign Up</f7-button>
+>>>>>>> 1668696ff75c849aa149c76d5ae8953423176db0
       <f7-block-footer>
         Already have an account?<f7-link href="/signin/">&nbsp;&nbsp;login</f7-link><br>
       </f7-block-footer>
@@ -75,4 +81,23 @@
       this.$store.commit('setSignedUp', false)
     }
   };
+<<<<<<< HEAD
 </script>
+=======
+</script>
+
+
+<style scoped>
+.wrapper {
+  text-align: center;
+}
+.image-cover {
+width: 150px;
+height: 150px;
+border-radius: 50%;
+margin: 20px;
+object-fit: cover;
+object-position: center;
+}
+</style>
+>>>>>>> 1668696ff75c849aa149c76d5ae8953423176db0

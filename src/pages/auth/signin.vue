@@ -4,7 +4,13 @@
     <f7-list form>
       <f7-list-input label="Email" type="email" placeholder="Your email" :value="email" @input="email = $event.target.value"></f7-list-input>
       <f7-list-input label="Password" type="password" placeholder="Your password" :value="password" @input="password = $event.target.value"></f7-list-input>
+<<<<<<< HEAD
       <f7-button style="margin: 10px 15px;" fill round @click="signIn">Sign In</f7-button>
+=======
+    </f7-list>
+    <f7-list>
+      <f7-button style="margin: auto 15px;" fill round @click="signIn">Sign In</f7-button>
+>>>>>>> 1668696ff75c849aa149c76d5ae8953423176db0
       <f7-block-footer>
         Don't have an account?<f7-link href="/signup/">&nbsp;&nbsp;SignUp</f7-link><br>
         <f7-link @click="forgetPassword">Forget password?</f7-link>
