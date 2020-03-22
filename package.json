@@ -19,7 +19,7 @@
     "cssPreProcessor": false,
     "theming": {
       "customColor": false,
-      "color": "#007aff",
+      "color": "#008080",
       "darkTheme": false,
       "iconFonts": true,
       "fillBars": false
