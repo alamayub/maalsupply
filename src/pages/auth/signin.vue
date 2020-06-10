@@ -5,7 +5,6 @@
       <f7-list-input label="Email" type="email" placeholder="Your email" :value="email" @input="email = $event.target.value"></f7-list-input>
       <f7-list-input label="Password" type="password" placeholder="Your password" :value="password" @input="password = $event.target.value"></f7-list-input>
 <<<<<<< HEAD
-      <f7-button style="margin: 10px 15px;" fill round @click="signIn">Sign In</f7-button>
 =======
     </f7-list>
     <f7-list>
